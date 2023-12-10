@@ -7,9 +7,14 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // GWAS_approx_pql_bed
-List GWAS_approx_pql_bed(XPtr<matrix4> pA, NumericVector PY, NumericMatrix P, NumericVector p, int beg, int end);
-RcppExport SEXP _milorGWAS_GWAS_approx_pql_bed(SEXP pASEXP, SEXP PYSEXP, SEXP PSEXP, SEXP pSEXP, SEXP begSEXP, SEXP endSEXP) {
+List GWAS_approx_pql_bed(XPtr<matrix4> pA, NumericVector PY, NumericMatrix P, NumericVector p, int beg, int end, std::string coding);
+RcppExport SEXP _milorGWAS_GWAS_approx_pql_bed(SEXP pASEXP, SEXP PYSEXP, SEXP PSEXP, SEXP pSEXP, SEXP begSEXP, SEXP endSEXP, SEXP codingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,13 +24,30 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type p(pSEXP);
     Rcpp::traits::input_parameter< int >::type beg(begSEXP);
     Rcpp::traits::input_parameter< int >::type end(endSEXP);
-    rcpp_result_gen = Rcpp::wrap(GWAS_approx_pql_bed(pA, PY, P, p, beg, end));
+    Rcpp::traits::input_parameter< std::string >::type coding(codingSEXP);
+    rcpp_result_gen = Rcpp::wrap(GWAS_approx_pql_bed(pA, PY, P, p, beg, end, coding));
+    return rcpp_result_gen;
+END_RCPP
+}
+// GWAS_approx_pql_dosages
+List GWAS_approx_pql_dosages(CharacterVector filename, NumericVector PY, NumericMatrix P, int beg, int end, double tol);
+RcppExport SEXP _milorGWAS_GWAS_approx_pql_dosages(SEXP filenameSEXP, SEXP PYSEXP, SEXP PSEXP, SEXP begSEXP, SEXP endSEXP, SEXP tolSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type PY(PYSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type P(PSEXP);
+    Rcpp::traits::input_parameter< int >::type beg(begSEXP);
+    Rcpp::traits::input_parameter< int >::type end(endSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    rcpp_result_gen = Rcpp::wrap(GWAS_approx_pql_dosages(filename, PY, P, beg, end, tol));
     return rcpp_result_gen;
 END_RCPP
 }
 // GWAS_logit_offset_bed
-List GWAS_logit_offset_bed(XPtr<matrix4> pA, NumericVector p, NumericVector Y, NumericVector Offset, NumericMatrix Q, int beg, int end, double tol, int max_iter);
-RcppExport SEXP _milorGWAS_GWAS_logit_offset_bed(SEXP pASEXP, SEXP pSEXP, SEXP YSEXP, SEXP OffsetSEXP, SEXP QSEXP, SEXP begSEXP, SEXP endSEXP, SEXP tolSEXP, SEXP max_iterSEXP) {
+List GWAS_logit_offset_bed(XPtr<matrix4> pA, NumericVector p, NumericVector Y, NumericVector Offset, NumericMatrix Q, int beg, int end, double tol, int max_iter, std::string coding);
+RcppExport SEXP _milorGWAS_GWAS_logit_offset_bed(SEXP pASEXP, SEXP pSEXP, SEXP YSEXP, SEXP OffsetSEXP, SEXP QSEXP, SEXP begSEXP, SEXP endSEXP, SEXP tolSEXP, SEXP max_iterSEXP, SEXP codingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -38,29 +60,26 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type end(endSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
-    rcpp_result_gen = Rcpp::wrap(GWAS_logit_offset_bed(pA, p, Y, Offset, Q, beg, end, tol, max_iter));
+    Rcpp::traits::input_parameter< std::string >::type coding(codingSEXP);
+    rcpp_result_gen = Rcpp::wrap(GWAS_logit_offset_bed(pA, p, Y, Offset, Q, beg, end, tol, max_iter, coding));
     return rcpp_result_gen;
 END_RCPP
 }
-// min_
-double min_(NumericVector x);
-RcppExport SEXP _milorGWAS_min_(SEXP xSEXP) {
+// GWAS_logit_offset_dosages
+List GWAS_logit_offset_dosages(CharacterVector filename, NumericVector Y, NumericVector Offset, NumericMatrix Q, int beg, int end, double tol, int max_iter);
+RcppExport SEXP _milorGWAS_GWAS_logit_offset_dosages(SEXP filenameSEXP, SEXP YSEXP, SEXP OffsetSEXP, SEXP QSEXP, SEXP begSEXP, SEXP endSEXP, SEXP tolSEXP, SEXP max_iterSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(min_(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// max_
-double max_(NumericVector x);
-RcppExport SEXP _milorGWAS_max_(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(max_(x));
+    Rcpp::traits::input_parameter< CharacterVector >::type filename(filenameSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Offset(OffsetSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Q(QSEXP);
+    Rcpp::traits::input_parameter< int >::type beg(begSEXP);
+    Rcpp::traits::input_parameter< int >::type end(endSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    rcpp_result_gen = Rcpp::wrap(GWAS_logit_offset_dosages(filename, Y, Offset, Q, beg, end, tol, max_iter));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -78,15 +97,87 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// chol_inverse
+List chol_inverse(NumericMatrix X);
+RcppExport SEXP _milorGWAS_chol_inverse(SEXP XSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    rcpp_result_gen = Rcpp::wrap(chol_inverse(X));
+    return rcpp_result_gen;
+END_RCPP
+}
+// read_dose_file
+List read_dose_file(CharacterVector filename);
+RcppExport SEXP _milorGWAS_read_dose_file(SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_dose_file(filename));
+    return rcpp_result_gen;
+END_RCPP
+}
+// dose_file_dim
+NumericVector dose_file_dim(CharacterVector filename);
+RcppExport SEXP _milorGWAS_dose_file_dim(SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(dose_file_dim(filename));
+    return rcpp_result_gen;
+END_RCPP
+}
+// nb_inds_dose_file
+int nb_inds_dose_file(CharacterVector filename);
+RcppExport SEXP _milorGWAS_nb_inds_dose_file(SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(nb_inds_dose_file(filename));
+    return rcpp_result_gen;
+END_RCPP
+}
+// samples_dose_file
+CharacterVector samples_dose_file(CharacterVector filename);
+RcppExport SEXP _milorGWAS_samples_dose_file(SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< CharacterVector >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(samples_dose_file(filename));
+    return rcpp_result_gen;
+END_RCPP
+}
+// read_vcf_head
+List read_vcf_head(std::string filename);
+RcppExport SEXP _milorGWAS_read_vcf_head(SEXP filenameSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::string >::type filename(filenameSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_vcf_head(filename));
+    return rcpp_result_gen;
+END_RCPP
+}
 
-RcppExport SEXP gg_manhattan_thinning(SEXP, SEXP, SEXP, SEXP);
+RcppExport SEXP gg_manhattan_thinning(void *, void *, void *, void *);
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_milorGWAS_GWAS_approx_pql_bed", (DL_FUNC) &_milorGWAS_GWAS_approx_pql_bed, 6},
-    {"_milorGWAS_GWAS_logit_offset_bed", (DL_FUNC) &_milorGWAS_GWAS_logit_offset_bed, 9},
-    {"_milorGWAS_min_", (DL_FUNC) &_milorGWAS_min_, 1},
-    {"_milorGWAS_max_", (DL_FUNC) &_milorGWAS_max_, 1},
+    {"_milorGWAS_GWAS_approx_pql_bed", (DL_FUNC) &_milorGWAS_GWAS_approx_pql_bed, 7},
+    {"_milorGWAS_GWAS_approx_pql_dosages", (DL_FUNC) &_milorGWAS_GWAS_approx_pql_dosages, 6},
+    {"_milorGWAS_GWAS_logit_offset_bed", (DL_FUNC) &_milorGWAS_GWAS_logit_offset_bed, 10},
+    {"_milorGWAS_GWAS_logit_offset_dosages", (DL_FUNC) &_milorGWAS_GWAS_logit_offset_dosages, 8},
     {"_milorGWAS_manhattan_thinning", (DL_FUNC) &_milorGWAS_manhattan_thinning, 4},
+    {"_milorGWAS_chol_inverse", (DL_FUNC) &_milorGWAS_chol_inverse, 1},
+    {"_milorGWAS_read_dose_file", (DL_FUNC) &_milorGWAS_read_dose_file, 1},
+    {"_milorGWAS_dose_file_dim", (DL_FUNC) &_milorGWAS_dose_file_dim, 1},
+    {"_milorGWAS_nb_inds_dose_file", (DL_FUNC) &_milorGWAS_nb_inds_dose_file, 1},
+    {"_milorGWAS_samples_dose_file", (DL_FUNC) &_milorGWAS_samples_dose_file, 1},
+    {"_milorGWAS_read_vcf_head", (DL_FUNC) &_milorGWAS_read_vcf_head, 1},
     {"gg_manhattan_thinning", (DL_FUNC) &gg_manhattan_thinning, 4},
     {NULL, NULL, 0}
 };
